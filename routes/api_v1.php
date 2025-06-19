@@ -11,11 +11,9 @@ use App\Models\Ticket;
 //url (universal resource locatior)
 //tickets
 //users
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::apiResource('tickets', TicketController::class);
 });
-
-Route::middleware('auth:sanctum')->apiResource('tickets', TicketController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
