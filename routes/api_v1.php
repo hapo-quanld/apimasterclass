@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\V1\TicketController;
+use App\Http\Controllers\Api\V1\UsersController;
 use App\Models\Ticket;
 
 
@@ -13,6 +14,7 @@ use App\Models\Ticket;
 //users
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::apiResource('tickets', TicketController::class);
+    Route::apiResource('users', UsersController::class);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
