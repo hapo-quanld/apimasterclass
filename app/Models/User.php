@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
+use App\HTTP\Filters\V1\QueryFilter;
 
 
 
@@ -54,5 +56,9 @@ class User extends Authenticatable
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filters) {
+        return $filters->apply($builder);
     }
 }
