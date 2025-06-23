@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginUserRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Permissions\V1\Abilities;
 
 class AuthController extends Controller
 {
@@ -27,7 +28,7 @@ class AuthController extends Controller
             [
                 'token' => $user->createToken(
                     'API token for ' . $user->email,
-                    ['*'],
+                    Abilities::getAbilities($user),
                     now()->addMonth())->plainTextToken
             ]
             );
