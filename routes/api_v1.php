@@ -14,9 +14,12 @@ use App\Models\Ticket;
 //tickets
 //users
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
-    Route::apiResource('tickets', TicketController::class);
+    Route::apiResource('tickets', TicketController::class)->except(['update']);
+    Route::put('tickets/{ticket}', [TicketController::class,'replace']);
+
     Route::apiResource('authors', AuthorsController::class);
-    Route::apiResource('authors.tickets', AuthorTicketController::class);
+    Route::apiResource('authors.tickets', AuthorTicketController::class)->except(['update']);
+    Route::put('authors/{author}/tickets/{ticket}', [AuthorTicketController::class,'replace']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
