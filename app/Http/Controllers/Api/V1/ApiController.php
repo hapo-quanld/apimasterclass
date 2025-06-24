@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponses;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Gate;
 
@@ -38,6 +39,11 @@ class ApiController extends Controller
     {
         $modelClass = is_object($targetModel) ? get_class($targetModel) : $targetModel;
         $gate = Gate::policy($modelClass, $this->policyClass);
-        return $gate->authorize($ability, [$targetModel]);
+        try{
+            $gate->authorize($ability, [$targetModel]);
+            return true;
+        } catch (AuthorizationException $ex) {
+            return false;
+        }
     }
 }
