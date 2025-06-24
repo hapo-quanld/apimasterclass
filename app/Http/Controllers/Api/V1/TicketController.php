@@ -36,7 +36,7 @@ class TicketController extends ApiController
         try{
             $this->isAble('store', Ticket::class);
 
-             return new TicketResource(Ticket::create($request->mappedAttributes()));
+            return new TicketResource(Ticket::create($request->mappedAttributes()));
         }
 
         catch(AuthorizationException $ex){
